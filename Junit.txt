@@ -1,0 +1,232 @@
+JUNIT TESTING
+------------------------
+It is known as functional testing.
+We have 2 parts
+i)actual output
+ii)Expected output
+
+example:-assertEquals(25,add(12,13));
+If both are equal then it display green signal otherwise brown signal
+-------------------------------------------------------------------------------------------------------
+Maven is a Tool .It provides the supporting jar files.
+example-for jdbc,servlet we added jar files manually.
+It was easy because it was single jar.Coming to spring framework  we have 25 to 30 jars .
+So it will be difficult to search and add the jar files.If the spring version changes then
+we have search for the jar files again of the same version which are compactible.So it is a 
+difficult job.
+In that case if we use maven .we have to only specify the spring version .It will only
+download the  compactable version.
+--------------------------------------------------------------------
+step 1:- file--->new--->maven project.
+step 2:- create simple project
+step 3:- groupid :- org.sandip (package name)
+step 4:- artifactId :-FirstMavenProj  (project name)
+----------------------------------------------------------------------------------------
+folder structure
+--------------------------------
+1)src/main/java
+2)src/main/resources
+3)src/test/java
+4)src/test/resources
+----------------------------------
+POM.xml :-
+maven dependency for junit 4
+---------------------------------------------------------------------------------- 
+<dependencies>
+  <!-- https://mvnrepository.com/artifact/junit/junit -->
+<dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+    <version>4.12</version>
+    <scope>test</scope>
+</dependency>
+  </dependencies>
+------------------------------------------------------------------------------------------------
+once you save the jar files will be downloaded.
+new folder will be created ---Maven Dependencies and jar files will be stored in it.
+----------------------------------------------------------------------------------------------------------------
+maven dependency for servlet
+----------------------------------------------------------
+<!-- https://mvnrepository.com/artifact/javax.servlet/servlet-api -->
+<dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>servlet-api</artifactId>
+    <version>2.5</version>
+    <scope>provided</scope>
+</dependency>
+----------------------------------------------------------------------------------------------------
+Example-1
+----------------
+src/main/java
+-----------------------------------------
+public class Calculator 
+{
+public int square(int i)
+{
+	return i*i;
+}
+public int add(int i,int j)
+{
+	return i+j;
+}
+public int sub(int i,int j)
+{
+	return i-j;
+}
+public int mul(int i,int j)
+{
+	return i*j;
+}
+public int div(int i,int j)
+{
+	return i/j;
+}
+public String user(String name)
+{
+	return "sandip";
+}
+public String concat(String string1,String string2)
+{
+	return string1+string2;
+}
+}
+
+-----------------------------------------------------------------------------------------------------
+src/test/java
+-----------------------
+import static org.junit.Assert.*;
+import org.junit.Test;
+public class CalculatorTest 
+{
+	Calculator ob=new Calculator();
+	@Test
+	public void testSquare()
+	{
+		assertEquals(49,ob.square(7));
+		assertEquals(36,ob.square(6));
+	}
+	@Test
+	public void TestOpt()
+	{
+		assertEquals(25,ob.add(12, 13));
+		assertEquals(5,ob.sub(18, 13));
+		assertEquals(25,ob.mul(5,5));
+		assertEquals(4,ob.div(12,3));
+			}
+	@Test
+	public void testString()
+	{
+		String result=ob.concat("Hello", "Students");
+	}
+	@Test
+	public void testUser()
+	{
+		assertEquals("sandip",ob.user("sandip"));
+	}
+	@Test
+	public void compareString()
+	{
+		String s1="Hello";
+		String s2="Hello";
+		assertSame(s1,s2);
+	}
+}
+---------------------------------------------------------------------------------------- 
+example-2
+--------------------------
+import static org.junit.Assert.*;
+import org.junit.Test;
+public class Test2 
+{
+@Test
+public void testString()
+{
+	String str1=new String("apple");
+	String str2=new String("apple");
+	String str3=null;
+	String str4="apple";
+	String str5="apple";
+	int val1=5;
+	int val2=6;
+	String[] expectedArray= {"one","two","three"};
+	String[] resultArray= {"one","two","three"};
+	
+	//to check two objects are equal
+	assertEquals(str1,str2);
+	//to check two values are true
+	assertTrue(val1<val2);
+	//to check two values are true
+	assertFalse(val1>val2);
+	//to check an object is null 	
+	assertNull(str3);
+	//to check an object is not null 	
+	assertNotNull(str1);
+	//to check if the 2 objects reference point to the same object
+	assertSame(str4,str5);
+	//to check if the 2 objects reference point to the same object
+	assertNotSame(str1,str5);
+	//to check if the 2 arrays are equal to each other
+	assertArrayEquals(expectedArray,resultArray);
+}
+}
+------------------------------------------------------------------------------------------
+@BeforeClass ---This will execute for one time before the tests
+
+@Before ---This will execute before each test
+@Test class
+@After---This will execute after each test
+
+@Before ---This will execute before each test
+@Test class
+@After---This will execute after each test
+
+@AfterClass ---This will execute for one time after the tests
+
+-----------------------------------------------------------------------
+example-3
+---------------------
+import static org.junit.Assert.assertEquals;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+public class Test3 
+{
+Calculator ob=new Calculator();
+@BeforeClass
+public static void beforeclassSetup()throws Exception
+{
+	System.out.println("Before Class");
+}
+@Before
+public void beforeTestSetup()
+{
+	System.out.println("Before Test");
+}
+@Test
+public void subTest()
+{
+	assertEquals(10,ob.sub(16, 6));
+}
+
+@Test
+public void addTest()
+{
+	assertEquals(16,ob.add(16, 6));
+}
+
+@After
+public void afterTestSetup()
+{
+	System.out.println("After Test");
+}
+
+@AfterClass
+public static void afterclassSetup()throws Exception
+{
+	System.out.println("After Class");
+}
+}
+------------------------------------------------------------------------------------------------------

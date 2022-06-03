@@ -1,0 +1,379 @@
+Example-1
+----------------------
+<html>
+<h1><center>Student Registration Page</center></h1><hr><hr>
+<form action="Second.jsp">
+<table>
+<tr><td>Enter your Name<td><input type=text name=t1 size=20 required></tr>
+<tr><td>Enter your Address<td><input type=text name=t2 size=20 required></tr>
+<tr><td>Enter your Email<td><input type=text name=t3 size=20 required></tr>
+<tr><td>Enter your Phoneno<td><input type=text name=t4 size=20 required></tr>
+<tr><td><td><input type=submit value=submit></tr>
+</table>
+</form>
+</html>
+-----------------------------------------------
+<%@page  import="java.sql.*" %>
+<% String a=request.getParameter("t1");
+String b=request.getParameter("t2");
+String c=request.getParameter("t3");
+String d=request.getParameter("t4");%>
+
+<%out.println("The name is "+a);
+out.println("<br>");
+out.println("The address is "+b);
+out.println("<br>");
+out.println("The email is "+c);
+out.println("<br>");
+out.println("The phoneno is "+d);%>
+
+<% Class.forName("oracle.jdbc.driver.OracleDriver");
+	Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","1234");
+	PreparedStatement ps=con.prepareStatement("insert into mphasisJsp values(?,?,?,?)");
+	ps.setString(1,a);
+	ps.setString(2,b);
+	ps.setString(3,c);
+	ps.setString(4,d);
+	ps.execute(); 
+	out.println("Row Inserted");
+	%>
+--------------------------------------------------------------------------------
+example-2
+---------------------
+<html>
+<h1><center>Student Registration Page</center></h1><hr><hr>
+<form action="Second.jsp">
+<table>
+<tr><td>Enter your Name<td><input type=text name=t1 size=20 required></tr>
+<tr><td>Enter your Address<td><input type=text name=t2 size=20 required></tr>
+<tr><td>Enter your Email<td><input type=text name=t3 size=20 required></tr>
+<tr><td>Enter your Phoneno<td><input type=text name=t4 size=20 required></tr>
+<tr><td><td>
+<input type=submit value=insert name=b1>
+<input type=submit value=update name=b1>
+<input type=submit value=delete name=b1>
+<input type=submit value=select name=b1>
+</tr>
+</table>
+</form>
+</html>
+----------------------------------------------------------------------------------------
+<%@page  import="java.sql.*" %>
+<% String a=request.getParameter("t1");
+String b=request.getParameter("t2");
+String c=request.getParameter("t3");
+String d=request.getParameter("t4");
+String e=request.getParameter("b1");
+%>
+
+
+<% Class.forName("oracle.jdbc.driver.OracleDriver");
+	Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","1234");
+	if(e.equals("insert"))
+	{
+	PreparedStatement ps=con.prepareStatement("insert into mphasisJsp values(?,?,?,?)");
+	ps.setString(1,a);
+	ps.setString(2,b);
+	ps.setString(3,c);
+	ps.setString(4,d);
+	ps.execute(); 
+	out.println("Row Inserted");
+	}
+	else if(e.equals("update"))
+	{
+	PreparedStatement ps=con.prepareStatement("update mphasisJsp set address=?,email=?,phoneno=? where name=?");
+	ps.setString(1,b);
+	ps.setString(2,c);
+	ps.setString(3,d);
+	ps.setString(4,a);
+		ps.execute(); 
+	out.println("Row Updated");
+	}
+	else if(e.equals("delete"))
+	{
+	PreparedStatement ps=con.prepareStatement("delete from mphasisJsp where name=?");
+	ps.setString(1,a);
+	ps.execute(); 
+	out.println("Row Deleted");
+	}
+	else if(e.equals("select"))
+	{
+	PreparedStatement ps=con.prepareStatement("select * from mphasisJsp");
+	ResultSet rs=ps.executeQuery();
+	out.println("<table border=1>");
+	out.println("<tr><th>Name<th>Address<th>Email<th>Phoneno</tr>");
+	while(rs.next())
+	{
+out.println("<tr><td>"+rs.getString(1)+"<td> "+rs.getString(2)+"<td> "+rs.getString(3)+"<td>"+rs.getString(4)+"</tr> ");
+	}
+	out.println("</table>");
+	}
+		else
+	{
+		out.println("Wrong Input");
+	}
+	%>
+------------------------------------------------------assignment-1-------------------------------------------------------------------------
+create a project
+covid-19 hospital
+registration
+doctor time table
+book ambulance
+book a bed
+feed back
+-------------------------------------JSP NOTES-----------------------------------------------------------------------------------------------
+1)The code for JSP is small as compared to servlet.
+2)in jsp the html code will be separate and the JSP code will be separate.
+3)The jsp code is converted to servlet when it runs internally.
+4)in jsp we have jsp action tags and implicit objects.
+5)jsp will take more time than servlet.
+6)there are 4 scopes:- 1)request 2)session 3)response 4)Application
+
+jsp life cycle :-
+------------------------
+1)jspInit()---Initialization
+2)_jspService()--execution
+3)jspDestroy()--clean up
+in this jsp is 1)compilation 2)Initialization 3)execution 4)clean up
+
+---------------------------------------------- 
+JAVA SERVER PAGES
+----------------------------------------------
+it is classified into 
+1)directives
+2)scripting elements
+3)standard action
+4)declaration tag<%!int a=10%>
+5)expression tag <%=sum%>
+6)comment tag <!-- -->
+
+Directives:-
+---------------
+Jsp directives are messages for jsp engine.they donot produce output.they tell the engine what to do with rest of the jsp page.it is enclosed with <%@-------%> tag
+the three primary directives are:-
+1)page 
+2)include
+3)custom tag libraries
+
+1)page directive:-
+Found at the top of the jsp page.there are 11 attributes in this directive.
+
+1)info :-<%@ page info="this is a welcome page"%>
+to add summary about the page.
+
+2)language:-<%@ page language="java"%>
+to specify scripting langauge used in the page
+
+3)content type:-<%@ page contentType="text/html"%>
+this is used to indicate MIME type
+
+4)Import :-<%@ page import ="java.util.Date"%>
+it is used to extend java classes.
+
+5)Session :-<%@ page session="false"%>
+It is used to indicate JSP page participates in session management.
+
+6)Buffer :-<%@ page buffer="12kb"%>
+to control buffered output for a jsp page.
+
+7)AutoFlush :-<%@ page autoFlush="true"%>
+It means the output will automatically flush.
+
+8)isThreadSafe :-<%@ page isThreadSafe="false"%>
+it is capable to responding multiple requests.
+
+9)Error Page :-<%@ page errorPage="error.jsp"%>
+It is used to display an alternate page if error occurs.
+
+10)isErrorPage :-<%@page isErrorPage="true"%>
+It is a common jsp page for error.
+
+11)extends :-<%@page extends="com.student.result"%>
+it is used for super class used by jsp container used mainly for custom tag libraries.
+
+Include Directives:-
+-----------------------------
+It lets us to include files at the time the jsp page is translated into servlet.
+it treats the contents of the file to be included as if it were part of the original page.It include resources at runtime.
+<%@ include file="include.jsp"%>
+
+Custom tag libraries :-
+---------------------------------
+it is also called jsp tag extensions.It provides a way of encapsulating reusable functionality on jsp page.It has ability to generate dynamic content by using java code.
+
+Scripting element:-
+------------------------
+1)declaration :-to declare variable and method <% int i=0;%>
+2)scriptlets :-It contain the java code.
+3)expression tag:-It is used to retrive value <%=user%>
+4)comment tag:-used for comments.<!-- this is jsp comments--%>
+
+Action Tag:-
+-----------------
+1)<jsp :plugins>
+2)<jsp :include>
+3)<jsp :forward>
+4)<jsp :param>
+5)<jsp :useBean>
+6)<jsp :getProperty>
+7)<jsp :setProperty>
+
+
+Implicit object:-
+-----------------------
+1)out-- PrintWriter
+2)response-- HttpServletResponse
+3)request-- HttpServletRequest
+4)page-- this a jsp page scope
+5)config-- ServletConfig
+6)session-- HttpSession
+7)application-- ServletContext
+8)execption-- Exception
+9)pageContext - JspWriter
+----------------------------------------------
+JSP EXAMPLE-1
+----------------------------------------------
+<html>
+    <head>
+   <title>JSP Page</title>
+    </head>
+    <body>
+        <%
+        out.println("JSP Scripting tag");
+         %>
+        <h1>Welcome to jsp</h1><br>
+        <h1> Jsp and Html are embeded </h1><br>
+                <%
+        out.println("welcome to jsp page");
+		out.println("<br>");
+        out.println("welcome to jsp page");
+      %>
+     </body>
+     </html>
+-----------------------------------------------------------------------------------------
+Example-2
+----------------
+   <html>
+    <head>
+         <title>JSP Page</title>
+    </head>
+    <body>
+         <%
+        int a=10,b=20,sum;
+        sum=a+b;
+        out.println("the sum of two numbers is"+sum);
+        %>
+      <h1>Hello World!</h1>
+      </body>
+     </html>
+---------------------------------------------------------
+Example-3
+---------------
+<body>
+        <h1>Hello World!</h1>
+<!-- expression tag  -->
+        <%= 5+4 %>
+<!-- declarative -->
+        <%!int sum,a,b;%>  <!-- this is known as global declaration -->
+        <% a=10;b=20; sum=a+b;
+        out.println("the sum of numbers is"+sum);
+        %>
+        <font color="red" size="8">
+            the sum of <%=a%> and <%=b%> is <%=sum%>
+        </font>                  
+    </body>
+----------------------------------------------------------------------
+Example-4
+------------------
+<body>
+        <form action="jsp4.jsp">
+            age=<input type="text" name="n1">
+            <input type="submit" value="submit">
+        </form>
+    </body>
+--------------------------------------------------------------------------------
+<%@page errorPage="error.jsp"%>
+
+<%!int age;
+    %>
+    <%
+String a=request.getParameter("n1");
+    age=Integer.parseInt(a);
+    out.println("the age is"+age);
+      %>
+--------------------------------------------------------------------------------------
+<%@page isErrorPage="true" %>
+<%
+out.println("enter only the number");
+out.println("<a href='First.html'>form</a>");
+%>
+--------------------------------------------------------------------------------
+<html>
+<script>
+----------------JAVASCRIPT-----------------------------------
+</script>
+<style>
+----------------------CSS---------------------------------------
+</style>
+<body>
+-----------------------HTML---------------------------------
+</body>
+</html>
+----------------------------------------------------------------------------
+Javascript
+--------------------
+1)we have to save the file by .html extention.
+2)java script is case senitive.
+3)It is supported by advance browser.
+4)we have a datatype called var.
+5)Java script support Object Oriented programming.
+6)we have lot of pre-defined functions in javascript.we can also create user defined functions.
+7)javascript will make the html page dynamic.
+8)javascript is mostly used for validation.example:- phoneno should be 10digits,password must be 8 characters.
+9)In javascript we can create class,object and constructor.
+------------------------------------------------------------------------------------
+
+<input type=text id=t1 name=a1 placeholder="enter your name" size=20>
+
+attributes :-
+type
+id
+name
+placeholder
+size
+--------------------------------------------
+DOM
+------------------
+document object model
+
+1)document.write();
+2)document.getElementById();
+3)document.innerHTML()
+
+when html document is loaded in the browser.It becomes a document object.
+By the help of document object we can add dynamic content to our webpage.
+-----------------------------------------------
+Example:-
+------------------
+<html>
+<script>
+function fun()
+{
+ var name=document.t1.value;
+alert("Welcome "+name);
+}
+</script>
+
+<body>
+Enter name<input type=text name=t1>
+<input type=button onclick=fun() value=PrintName>
+</body>
+</html>
+-----------------------------------------
+window object
+--------------------------------
+1)alert()
+2)confirm()
+3)prompt()
+-------------------------------------------------------------------------------------------------
+

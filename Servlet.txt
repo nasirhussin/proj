@@ -1,0 +1,616 @@
+<html>
+<h1><center>Student Registration Page</center></h1><hr><hr>
+<form action="Second">
+<table>
+<tr><td>Enter your Name<td><input type=text name=t1 size=20 required></tr>
+<tr><td>Enter your Address<td><input type=text name=t2 size=20 required></tr>
+<tr><td>Enter your Email<td><input type=text name=t3 size=20 required></tr>
+<tr><td>Enter your Phoneno<td><input type=text name=t4 size=20 required></tr>
+<tr><td><td>
+<input type=submit value=submit>
+</tr>
+</table>
+</form>
+</html>
+--------------------------------------------------------------
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
+@WebServlet("/Second")
+public class Second extends GenericServlet
+{
+	@Override
+	public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException 
+	{
+		res.setContentType("text/html");
+		PrintWriter pw=res.getWriter();
+		String a=req.getParameter("t1");
+		String b=req.getParameter("t2");
+		String c=req.getParameter("t3");
+		String d=req.getParameter("t4");
+		pw.println("The name is "+a);
+		pw.println("The address is "+b);
+		pw.println("The email is "+c);
+		pw.println("The phoneno is "+d);
+		
+	}
+	
+}
+--------------------------------------------------------------------
+add the jar file----servletapi.jar
+------------------------------------------------------------------------------------------------
+example-2
+----------------
+<html>
+<h1><center>Student Registration Page</center></h1><hr><hr>
+<form action="Second">
+<table>
+<tr><td>Enter your Name<td><input type=text name=t1 size=20 required></tr>
+<tr><td>Enter your Address<td><input type=text name=t2 size=20 required></tr>
+<tr><td>Enter your Email<td><input type=text name=t3 size=20 required></tr>
+<tr><td>Enter your Phoneno<td><input type=text name=t4 size=20 required></tr>
+<tr><td><td>
+<input type=submit value=Insert>
+</tr>
+</table>
+</form>
+</html>
+--------------------------------------------------------------
+import java.io.*;
+import java.sql.*;
+import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
+@WebServlet("/Second")
+public class Second extends GenericServlet
+{
+	@Override
+	public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException 
+	{
+		res.setContentType("text/html");
+		PrintWriter pw=res.getWriter();
+		String a=req.getParameter("t1");
+		String b=req.getParameter("t2");
+		String c=req.getParameter("t3");
+		String d=req.getParameter("t4");
+		pw.println("The name is "+a);
+		pw.println("The address is "+b);
+		pw.println("The email is "+c);
+		pw.println("The phoneno is "+d);
+		try
+		{
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+	Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","1234");
+		PreparedStatement ps=con.prepareStatement("insert into mphasisJsp values(?,?,?,?)");
+		ps.setString(1,a);
+		ps.setString(2,b);
+		ps.setString(3,c);
+		ps.setString(4,d);
+		ps.execute(); 
+		pw.println("Row Inserted");
+		}
+		catch(Exception ae)
+		{
+			ae.printStackTrace();
+		}
+	}
+}
+--------------------------------------------------------------------------------------------------------
+Servlet API
+------------------------
+The javax.servlet and javax.servlet.http packages represent interfaces and classes for servlet api.
+Interfaces in javax.servlet package
+Servlet
+ServletRequest
+ServletResponse
+RequestDispatcher
+ServletConfig
+ServletContext
+SingleThreadModel
+Filter
+FilterConfig
+FilterChain
+ServletRequestListener
+ServletRequestAttributeListener
+ServletContextListener
+ServletContextAttributeListener
+------------------------------------------------------------------------------------------
+Classes in javax.servlet package
+There are many classes in javax.servlet package. They are as follows:
+GenericServlet
+ServletInputStream
+ServletOutputStream
+ServletRequestWrapper
+ServletResponseWrapper
+ServletRequestEvent
+ServletContextEvent
+ServletRequestAttributeEvent
+ServletContextAttributeEvent
+ServletException
+
+--------------------------------------------------------------------------------
+There are many interfaces in javax.servlet.http package. They are as follows:
+
+HttpServletRequest
+HttpServletResponse
+HttpSession
+HttpSessionListener
+HttpSessionAttributeListener
+HttpSessionBindingListener
+HttpSessionActivationListener
+
+Classes in javax.servlet.http package
+---------------------------------------------------------------------------------
+
+There are many classes in javax.servlet.http package. They are as follows:
+
+HttpServlet
+Cookie
+HttpServletRequestWrapper
+HttpServletResponseWrapper
+HttpSessionEvent
+
+--------------------------------------------------------------------------
+
+SERVLET
+-----------------
+1)A servlet is a server side component.A servlet is a java programming language class used to extend the capabilities of servers that host application accessed via a request-response programming model.
+2)servlet are durable object they remain in memory and specially instructed to be destroyed .servlet will be loaded on the address space of webserver.
+
+What is servlet Container?
+The servlet container is a part of webserver or application server that provide the network service over which request and response.A servlet container also contains and manages servlet through their life cycle.
+A servlet container can also be built into a host web server and installed as an add-on component to webserver.
+
+Types of servlets:-
+------------------------
+1)generic servlet are protocal independent.
+2)Http servlet are protocal specific they can be invoke only with the http protocol.
+
+when implementing a generic service we must extend GenericServlet class which provides the java servlet api.
+
+when implementing a http service we must extends HttpServlet class which provides methods such as doGet and doPost.
+
+two packages required to build servlet
+1)javax.servlet
+2)javax.servlet.http
+
+Life cycle of servlet:-
+----------------------------
+1)init():-server invokes init() when servlet is first loaded into the webserver memory.This method is used to initialize new servlet instance.Return type is void.
+
+2)service():-To activate the servlet instance to handle the client request.
+
+3)destroy():-It is called by the webserver to destroy the existing servlet instance,or clean up any resource the servlet is consuming.
+
+
+
+------------------------------------------------------------------------------------------------------
+HTTP Servlet:-
+-----------------------
+1)SendRedirect() :-we can redirect the browser to a resource part of the same application.
+we can redirect another web application running through the same web container.
+2)RequestDispatcher :-
+it is an interface inside javax.servlet.*;
+it contains two methods :-
+1)forward(ServletRequest req,ServletResponse res)
+2)include(ServletRequest req,ServletResponse res)
+RequestDispatcher is to forward the request to other servlet or include the output of another servlet as a part of the response.
+To build a web application to be stateful that can remember the state of the client we use 
+1)hidden field 2)cookies 3)session object 4)url rewritting
+
+Cookies :-
+cookies is a small amount of information set by the server on the client machine.
+
+It is useful for session tracking for each client request a cookies can provide client session id.
+
+getSession(true) :-It creates a new session and set the value from request object.
+getSession(false):-The web container search for the old session object.
+
+servlets are multithreaded for each client request a separate thread will start.
+
+Difference between GET and POST?
+get and post are used to process the request of a client .get method is a part of url.so we can send less amount of data through get.the amount of information limited is 240-255 character.
+But using post we can post larger amount of data through hidden field.
+ 
+Session are more secure and fast because they are stored at server side.
+Session has to be used internally with cookies or urlrewritting to maintain session id.
+
+
+Servlet Filters:-
+--------------------
+1)init() :-calls the filter into service and sets the filter's configuration object.
+2)doFilter():- performs the filtering task.
+3)getFilterConfig():- Return the filter's configuration object.
+4)destroy():-Removes a filter from service.
+
+use of filter:-
+---------------
+1)securing application
+2)help to safe guard the data.
+
+Servlet Listener :-
+--------------------------
+It is a interface
+There are 2 types :-
+1)ServletContextListener
+It is executed once the application is deployed in the application server.
+2)HttpSessionListener
+It is very useful in maintaining data available throughout the life cycle of web application until it is invalid or closed.
+Uses:-
+--------------------
+1)to keep the track of no of concurrent clients using a web application.
+2)database need to be loaded on startup and saved while shut down.
+------------------------------------------------------------------------------------------------------------
+1)SendRedirect() :-we can redirect the browser to a resource part of the same application.
+we can redirect another web application running through the same web container.
+------------------------------------------------------------------------------------------------------------
+example-1
+----------------------
+<html>
+<body bgcolor=yellow>
+<h1><center>Login Page</center></h1><hr>
+<form action=Login method="get">
+<table>
+<tr><td>Enter Username<td><input type=text name=t1 size=20></tr>
+<tr><td>Enter Password<td><input type=password name=t2 size=20></tr>
+<tr><td><td><input type=submit name=submit></tr>
+</table>
+</form>
+</body>
+</html>
+------------------------------------------------
+import java.io.*;
+import java.sql.*;
+import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
+@WebServlet("/Login")
+public class Login extends HttpServlet
+{
+public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException 
+	{
+	res.setContentType("text/html");
+	PrintWriter pw=res.getWriter();
+	String a=req.getParameter("t1");
+	String b=req.getParameter("t2");
+	try
+	{
+	Class.forName("oracle.jdbc.driver.OracleDriver");
+	Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","1234");
+	PreparedStatement ps=con.prepareStatement("select * from mphasisRegister where name=? and pass=?");
+	ps.setString(1,a);
+	ps.setString(2,b);
+	ResultSet rs=ps.executeQuery();
+	int x=0;
+	while(rs.next())
+	{
+		x=1; //when uusername/password match
+	}
+	if(x==1)
+	{
+		pw.println("Login Successful");
+	}
+	else
+	{
+		res.sendRedirect("Login.html");
+	}
+	}
+	catch(Exception ae)
+{
+ae.printStackTrace();
+}}	}	
+--------------------------------------------------------------------------------
+<html>
+<body bgcolor=yellow>
+<h1><center>Registration Page</center></h1><hr>
+<form action=Register method="get">
+<table>
+<tr><td>Enter Username<td><input type=text name=t1 size=20 required></tr>
+<tr><td>Enter Password<td><input type=password name=t2 size=20 required></tr>
+<tr><td>Enter Email<td><input type=email name=t3 size=20 required></tr>
+<tr><td>Enter Phone no<td><input type=number name=t4 size=20 required></tr>
+<tr><td>Enter Address<td><input type=text name=t5 size=20 required></tr>
+<tr><td><td><input type=submit name=submit></tr>
+</table>
+</form>
+</body>
+</html>
+---------------------------------------------------------------------------------------------
+import java.io.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+
+import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
+@WebServlet("/Register")
+public class Register extends HttpServlet
+{
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException 
+	{
+				res.setContentType("text/html");
+				PrintWriter pw=res.getWriter();
+				String a=req.getParameter("t1");
+				String b=req.getParameter("t2");
+				String c=req.getParameter("t3");
+				String d=req.getParameter("t4");
+				String e=req.getParameter("t5");
+				try
+				{
+				Class.forName("oracle.jdbc.driver.OracleDriver");
+				Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","1234");
+				PreparedStatement ps=con.prepareStatement("insert into mphasisRegister values(?,?,?,?,?)");
+				ps.setString(1,a);
+				ps.setString(2,b);
+				ps.setString(3,c);
+				ps.setString(4,d);
+				ps.setString(5,e);
+				ps.execute();
+				res.sendRedirect("Login.html");
+		}
+		catch(Exception ae)
+	{
+		ae.printStackTrace();
+	}
+	}
+}
+
+----------------------------------------------------------------------------------------------------------------
+create table mphasisRegister(name varchar2(30),pass varchar2(30),email varchar2(30),
+phone varchar2(30),address varchar2(30))
+----------------------------------------------------------------------------------------------------------------------
+session and cookies
+------------------------------------
+session:- logged in to amazon.the sessions are created in the server.session ID will be created in the server. 
+servlet are stateless.They donot remember the previous state.
+------------------------------------------------------------------------------------------------------------------------------------
+purchasing goods .there are different sections--mobile,watch,cloths,etc.....
+each section your buys any goods it will be stored into a session.
+HttpSession ses=req.getSession(true);//session id will be generated
+ses.setAttribute("x",jeens);----page1
+ses.setAttribute("y",watch); ----page2
+ses.setAttribute("z",shirt); ----page2
+ses.setAttribute("p",shoes); ----page4
+---------------------------------------------------
+finally while billing we can retrive from the session.
+ses.getAttribute("x");
+ses.getAttribute("y"); 
+ses.getAttribute("z");
+ses.getAttribute("p"); 
+--------------------------------------------------------------------
+cookies :- They are local storage.username/password of gmail is stored in cookies.
+in your system every time you login to gmail it willl not ask for username/password.
+---------------------------------------------------------------------------------------------------------------
+Example-1
+----------------------
+<html>
+<body bgcolor=yellow>
+<form action=firstservlet method=get>
+<center><h1>LOGIN FORM</h1><hr><br><br>
+Enter user name<input type=text name=t1 size=20><br>
+Enter password<input type=password name=t2 size=20><br>
+<input type=submit value=login>
+</form>
+</body>
+</html>
+-------------------------------------------
+import javax.servlet.*;
+import javax.servlet.http.*;
+import javax.servlet.annotation.*;
+import java.io.*;
+@WebServlet("/firstservlet")
+public class firstservlet extends HttpServlet
+{
+public void doGet(HttpServletRequest req,HttpServletResponse res)
+{
+try
+{
+res.setContentType("text/html");
+PrintWriter pw=res.getWriter();
+String a=req.getParameter("t1");
+String b=req.getParameter("t2");
+HttpSession ses=req.getSession(true);
+ses.setAttribute("x",a);
+ses.setAttribute("y",b);
+pw.println("<html>");
+pw.println("<form action=secondServlet method=get>");
+pw.println("enter address:");
+pw.println("<input type=text name=t3 size=20><br>");
+pw.println("enter phone no:");
+pw.println("<input type=text name=t4 size=20><br>");
+pw.println("<input type=submit value=submit><br>");
+pw.println("</form></html>");
+pw.close();
+}
+catch(Exception ae)
+{}
+}
+}
+--------------------------------------------------------------------------------------------
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+import javax.servlet.annotation.*;
+@WebServlet("/secondServlet")
+public class secondServlet extends HttpServlet
+{
+public void doGet(HttpServletRequest req,HttpServletResponse res)
+{
+try
+{
+res.setContentType("text/html");
+PrintWriter pw=res.getWriter();
+String c=req.getParameter("t3");
+String d=req.getParameter("t4");
+HttpSession ses=req.getSession(false);
+ses.setAttribute("g",c);
+ses.setAttribute("h",d);
+String a=(String)ses.getAttribute("x");
+String b=(String)ses.getAttribute("y");
+pw.println("the rollno is :"+a);
+pw.println("the name is :"+b);
+pw.println("the address is :"+c);
+pw.println("the phone no is :"+d);
+}
+catch(Exception ae)
+{}
+}
+}
+-------------------------------------------------------------------------------------------------
+wap to create 3 amazon pages
+shoes,shirt,jeans
+store the item and cost into the session
+display the item and cost at last in the final bill
+no data base.
+---------------------------------------------------------------------
+Create a calculator using servlet
+------------------------------------------------
+session 
+--------------
+They are memory blocks created in the server.
+They are secured.
+Servlet are stateless.They donot remember the previous state.so session are used to store the data and help the servlet stateful.
+
+It is used for online shopping.customer can select some items from every pages and finally get the bill at the last page.
+
+a session is started when a client logs into the server.Till he is connected a session is created.once the client gets disconnected the session is over.
+---------------------------------------------------------------------------------------------------------
+Create a calculator using servlet
+--------------------------------------------
+example-1
+----------------
+<html>
+        <body>
+                <form action="CalculateServlet">
+                        Number 1 : <input type="text" name="no1"> <br>
+                        Number 2 : <input type="text" name="no2"> <br> 
+                        Operator : 
+                                     <select name="opt">
+                                <option value="p"> + </option>
+                                <option value="m"> - </option>
+                                <option value="mul"> * </option>
+                                <option value="d"> / </option>                                                                                                          
+                        </select>
+                                       <br>
+                        <input type="submit" value="Go">
+                </form>        </body></html>
+
+-----------------------------------------------------------------------------------------
+import java.io.*;
+import javax.servlet.*;
+ import javax.servlet.annotation.*;
+@WebServlet("/CalculateServlet")
+public class CalculateServlet extends GenericServlet
+{
+        public void service(ServletRequest request,ServletResponse response) throws IOException,ServletException
+        {
+               PrintWriter out = response.getWriter();
+                String n1 = request.getParameter("no1");
+                String n2 = request.getParameter("no2");
+                String opt = request.getParameter("opt");                
+                if(opt.equals("p"))
+                        out.println(Integer.parseInt(n1) + Integer.parseInt(n2));
+                else if(opt.equals("m"))
+                       out.println(Integer.parseInt(n1) - Integer.parseInt(n2));
+        }}
+----------------------------------------------------------------------------------------------------------------
+create a online shopping cart.amazon /flipcart
+------------------------------------------------------------------------------------------
+Cookies:-
+The memory blocks are created in the local machine.
+Example:- storeing of username/password of gmail,facebook etc...
+--------------------------------------------------------
+example-1
+-----------------------
+add cookies
+-----------------------
+<html>
+     <head>
+     </head>
+      <body bgcolor="orange">
+          <h1>store the data into cookies</h1>
+          <form action="addcookies">
+          <b> Enter the name of  cookie</b>
+          <input type="text" name="n1" size="6"><br><br>
+          <b> Enter the value of  cookie </b>
+          <input type="text" name="n2" size="6"><br><br>
+          <input type="submit" value="submit">
+          </form>
+    </body>
+</html>
+------------------------------------------------------------
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import javax.servlet.annotation.*;
+@WebServlet("/addcookies")
+public class addcookies extends HttpServlet
+ {
+     protected void service(HttpServletRequest request, HttpServletResponse response)
+             throws ServletException, IOException {
+          response.setContentType("text/html");
+          PrintWriter out = response.getWriter();
+           try {
+            String name1=request.getParameter("n1");
+            String value1=request.getParameter("n2");
+            Cookie cc=new Cookie(name1, value1);
+            response.addCookie(cc);
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet addcookies</title>");            
+            out.println("</head>");
+            out.println("<body bgcolor='blue'>");
+            out.println("Name of first cookie = ");
+            out.println(name1);
+            out.println("<br>value of first cookie = ");
+            out.println(value1);
+            out.println("</body>");
+            out.println("</html>");
+        } finally {               
+               out.close();
+          }     }}
+----------------------------------------------------------------------------------
+getCookies
+------------------------------
+<html>
+     <body bgcolor="orange">
+            <h1>To retrieve the data from cookies</h1>
+             <form action="getcookies">
+         
+              <B> CLICK THE BUTTON TO FIRE THE COOKIE</B><br>
+              <input type="submit" value="submit"/>
+             </form>
+    </body>
+</html>
+--------------------------------------------------------------
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import javax.servlet.annotation.*;
+@WebServlet("/getcookies")
+public class getcookies extends HttpServlet 
+{
+    public void service(HttpServletRequest request, HttpServletResponse response)
+             throws ServletException, IOException
+ {
+          response.setContentType("text/html");
+          PrintWriter out = response.getWriter();
+         try {   
+            out.println("<html>"); 
+             out.println("<head>");
+            out.println("<title>Servlet getcookies</title>");            
+            out.println("</head>");
+            out.println("<body bgcolor='yellow'>");
+            Cookie cookies[]=request.getCookies();
+            for(int i=0;i<cookies.length;i++)
+            {
+                String name=cookies[i].getName();
+                String value=cookies[i].getValue();
+                out.println("<br> cookie name="+name+"<br>");
+                out.println("<br> cookie value="+value);
+            }
+            out.println("</body>");
+           out.println("</html>");
+                  } finally {               
+               out.close();       
+}     }}

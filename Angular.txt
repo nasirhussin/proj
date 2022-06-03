@@ -1,0 +1,263 @@
+ines (247 sloc)  10.1 KB
+   
+Angular 8/9/10
+--------------------------
+1)Angular is an open source,cross platform,
+2)it provides end to end solution for building,debugging,testing and deploying.
+3)it provides testing framework like jasmine,karma,protractor.
+4)language used for angular is typescript.It support oops.(javascript-var)
+5)Framework supported are MVC,MVVM
+6)it is also used for cross platform mobile and web appliaction.
+7)it is used for SPA (single page application) .
+8)it has high speed and performance is better as compared to older technolgy 
+used webpages.
+9)Angular use AOT compiler.[Ahead-of-time].
+*it converts typescript code into efficient javascript code before building phase .
+before browser downloads and runs that code.
+It provides faster rendering.
+10)Previous version used JIT compiler [just-in-time]
+*it compiles your code after the page is loaded into the browser. 
+--------------------------------------------------------------------------------------------------
+steps for Installation
+--------------------------------------
+install node.js
+https://nodejs.org/en/download/
+cmd>node -v
+install visual studio code
+https://code.visualstudio.com/download
+------------------------------------------------------------------
+1)npm install -g @angular/cli
+2)C:\projects-workspace\desktop>ng new batch223
+----C:\projects-workspace\desktop>cd batch223
+3)C:\projects-workspace\desktop\batch223>cd batch223 
+4)Browser- Application starts on Live Server listening on http://localhost:4200
+To create subfolders
+5)C:\Users\sandip\Desktop\amazon\src\app>ng g c login --skipTests
+----------------------------------------------------------------------------------------------------
+6)npm install bootstrap
+
+App folder
+--------------------
+1)app.component.html-------------Presentation(View)
+2)app.component.ts ----------------Logic
+3)app.component.css----------------styles
+4)app.component.spec.tc-----------Testing
+-----------------------------------------------------------------
+app.module.ts
+----------------------
+1)it contains the list of files used in your project.
+2)every modules or library that you want to use in your project should be configured 
+in app.module.ts
+3)In a project there will be many folder each folder will have .html,.css,.ts,.spec.tc
+but only one app.module.ts
+--------------------------------------
+1)NgModule({}) :- information about your application provided to complier.
+2)declaration :- registers your component.//components are classes in Angular.
+3)imports:- registers your modules.
+4)provider:- registers your services.//functions 
+5)bootstrap:-specify the component to start with.
+------------------------------------------------------------------------------
+@Component :-
+----------------------
+1)It is derived from "Component" base of "@angular/core" library.
+2)every component in angular is comprises of presentation,logic and styles.
+3)logic is written in typescipt which is compiled into javascript.
+4)@Compoment ({property:value,property:value})
+5)@Component() Decorator that marks a class as an Angular component. and provides configuration metadata that determines how the component should be processed,instantiated and used at runtime.
+*how it will function :- feedback,contact,registration
+
+1)selector :<app-home></app-home> .This is from index.html.
+2)template:Here directly we write the html code to render.
+3)templateUrl:Here we give the path of the html file.
+4)styles:It is a collection of style properties and their values.
+5)styleUrls:It can access styles from an enternal stylesheet.
+6)animations:it use a set of CSS keyframes to use for animations.
+--------------------------------------------------------------------------------------------
+Data binding
+-------------------------
+<input type=text name=t1 size=20>
+t1=sandip
+---------------------------------------------------------------
+There are 2 ways of data binding
+--------------------------------------------------
+one way data binding
+1)interpolation
+we use double curly braces {{}} and is known as interpolation or template expression.
+example:- 
+we are assigning some value in the "app.component.ts" and the value displayed on the html page.
+{{name}}
+<p>The sum of 6 and 7 is {{6+7}} </p>
+<p>The multiplcation of 6 and 7 is {{6*7}} </p>
+--------------------------------------------------------------------
+2)property binding
+------------------------------
+In this we use square brackets to the DOM properties.
+example:-
+<img[src]="shoe.jpg">
+-------------------------------------------------------------------
+3)event binding
+-----------------------
+in this we use circular brackets .it is mostly used with buttons.
+we put event in parentheses.
+example:-
+<button (click)="onSave()">Save</button>
+
+2)two way data binding
+---------------------------------------
+In this user can update the entry .A change made to the user entry in the html input element we require two-way binding.
+example
+Enter your name<input type=text name=t1 size=20> 
+
+[(value)] ="expression";
+Enter your name<input type=text [(ngModel)]="name">
+----------------------------------------------------------------------------------------
+app.module.ts
+---------------------------
+1)import { FormsModule } from '@angular/forms';
+2)import[FormsModule]
+FormsModule ==>package
+@angular/forms ==>Library
+---------------------------------------------------------------------------------------------------------- 
+In 2 way binding we have 
+MVC -Angular follow it.
+
+Model---------data stored and updated
+view -----------The output screen
+controller-----The .ts file 
+-----------------------------------------------------------------------------------------------------------------
+one way binding
+-------------------------
+oneway.component.ts
+-----------------------------------
+selector:'app-root';
+templateUrl:'oneway.component.html';
+export class OnewayComponent
+{
+public product=
+{
+Name:'Samsung TV',
+Price:45000.44,
+}}
+----------------------------------------------------
+<dl>
+<dt>Name</dt>
+<dd>{{product.Name}}</dd>
+<dd><input type=text value={{product.Name}}></dd>
+<dt>Price</dt>
+<dd>{{product.Price}}</dd>
+<dd><input type=text value={{product.Price}}></dd>
+<dd innerHTML={{product.Price}}></dd>
+</dl>
+------------------------------
+create folder
+---------------------
+1)desktop/flipcard/src/app>ng g c oneway --skipTests
+
+oneway
+ 	oneway.component.ts
+	oneway.component.css
+	oneway.component.html
+*automatically app.module.ts will be updated
+-------------------------------------------------------------
+2)change in index.html <-----<app-root></app-root>
+3)change in bootstrap[OnewayComponent]   <--app.module.ts
+
+----------------------------------------------------------------------------------------------------------
+Example-1
+-------------------------------------
+<h1>Employee Registration Page</h1><hr>
+<form>
+<table>
+<tr><td>Enter your name</td><td><input type=text name=t1 size=20></td></tr>
+<tr><td>Enter your email</td><td><input type=text name=t2 size=20></td></tr>
+<tr><td>Enter your address</td><td><input type=text name=t3 size=20></td></tr>
+<tr><td>Enter your phoneno</td><td><input type=text name=t4 size=20></td></tr>
+<tr><td>Enter your nationality</td><td><input type=text name=t5 size=20></td></tr>
+<tr><td></td><td><input type=submit value="submit"></td></tr>
+</table>
+</form>
+--------------------------------------------------------------------------------------------------------
+step 1:- index.html
+<app-root></app-root>
+-------------------------------------------------
+step 2:-app.module.ts
+bootstrap: [AppComponent]
+---------------------------------------------------------
+create a registration page
+ng g c registration --skipTests
+----------------------------------------------------------------
+create a contact page
+ng g c contact --skipTests
+-------------------------------------------------------------
+
+module-1 creation
+-------------------------------------
+index.html
+----------------------------------
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Batch223</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <app-registration></app-registration>  <---------------------------------
+</body>
+</html>
+-----------------------------------------------------
+app.module.ts
+----------------------
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { RegistrationComponent } from './registration/registration.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    RegistrationComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule
+  ],
+  providers: [],
+  bootstrap: [RegistrationComponent]  <---------------------------------
+})
+export class AppModule { }
+---------------------------------------------------------------------
+registration.component.html
+-----------------------------------------------
+<h1>Employee Registration Page for Angular</h1><hr>
+<form>
+<table>
+<tr><td>Enter your name</td><td><input type=text name=t1 size=20></td></tr>
+<tr><td>Enter your email</td><td><input type=text name=t2 size=20></td></tr>
+<tr><td>Enter your address</td><td><input type=text name=t3 size=20></td></tr>
+<tr><td>Enter your phoneno</td><td><input type=text name=t4 size=20></td></tr>
+<tr><td>Enter your nationality</td><td><input type=text name=t5 size=20></td></tr>
+<tr><td></td><td><input type=submit value="submit"></td></tr>
+</table>
+</form>
+--------------------------------------------------------------------------
+step 1:- app>ng g c contact --skipTests
+step 2:-change selector in index.html
+step 3:-bootstrap: [RegistrationComponent]  in app.module.ts
+step 4:-ng serve
+step 5:-localhost:4200
+------------------------------------------------------------------------------
+registration page
+login page
+contact page
+service page
+feedbackpage
+---------------
+
+spring boot software link
+-----------------------------------
+https://www.npackd.org/p/org.springsource.STS64/4.5.1
+------------------------------------------------------------------------------
